@@ -1,0 +1,75 @@
+try:
+ import requests
+ from instabot import Bot,api
+ from user_agent import generate_user_agent
+except:exit('[!] Download The lib Please\n> instabot,bot,requests_toolbelt,user_agent,requests,os,requests,time,random,sys')
+def info_Getting():
+ print("-------------------------------------")
+ user=input("[?] username:")
+ headers={"Connection": "close", "X-IG-Connection-Type": "WIFI","mid":"XOSINgABAAG1IDmaral3noOozrK0rrNSbPuSbzHq","X-IG-Capabilities": "3R4=","Accept-Language": "ar-sa","Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+ "User-Agent": "Instagram 99.4.0 Filza_TweakPY (Filza_TweakPY)",
+ "Accept-Encoding": "gzip, deflate"}
+ data={"signed_body": "35a2d547d3b6ff400f713948cdffe0b789a903f86117eb6e2f3e573079b2f038.{\"q\":\"%s\"}" % user }
+ req=requests.post("https://i.instagram.com:443/api/v1/users/lookup/",headers=headers,data=data)
+ inf=req.json()
+ print("-------------------------------------")
+ print("[+] username:",user)
+ print("-------------------------------------")
+ print("[+] email sent:",inf['email_sent'])
+ print("[+] sms sent:",inf['sms_sent'])
+ print("[+] You search by:",inf['lookup_source'])
+ try:print("[+] email:",inf['obfuscated_email'])
+ except:pass
+ try:print("[+] phone:",inf['obfuscated_phone'])
+ except:pass
+ print("[+] acc is private or not:",inf['user']['is_private'])
+ print("[+] acc is verified or not:",inf['user']['is_verified'])
+ print("[+] valid phone:",inf['has_valid_phone'])
+ print("[+] can reset with email:",inf['can_email_reset'])
+ print("[+] can reset with sms:",inf['can_sms_reset'])
+ print("[+] any user like his name:",inf['multiple_users_found'])
+ print("[+] full name:",inf['user']['full_name'])
+ print("[+] can reset with wa:",inf['can_wa_reset'])
+ print("[+] user id:",inf['user_id'])
+ print("[+] the fb login option:",inf['fb_login_option'])
+ print("-------------------------------------")
+ print("[+] profile pic id :",inf['user']['profile_pic_id'])
+ print("[+] profile pic url:",inf['user']['profile_pic_url'])
+ print("-------------------------------------")
+def check_vaild_email():
+ email_or_user=input("[?] Type The email:\n>")
+ head={
+   'Host': 'www.instagram.com',
+   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0',
+   'Accept': '*/*',
+   'Accept-Language': 'ar,en-US;q=0.7,en;q=0.3',
+   'Accept-Encoding': 'gzip, deflate, br',
+   'X-CSRFToken': '5o7PN96Y9Ln95EnlXN6t0pmCHDqdbect',
+   'X-Instagram-AJAX': '11170428d971',
+   'X-IG-App-ID': '936619743392459',
+   'X-ASBD-ID': '437806',
+   'X-IG-WWW-Claim': '0',
+   'Content-Type': 'application/x-www-form-urlencoded',
+   'X-Requested-With': 'XMLHttpRequest',
+   'Content-Length': '103',
+   'Origin': 'https://www.instagram.com',
+   'Connection': 'keep-alive',
+   'Referer': 'https://www.instagram.com/accounts/password/reset/',
+   'Cookie': 'ig_did=7B796F1F-ADE7-429C-8ADB-9B131663E5E4; datr=2kDRYNWmjctteBSnOqogPrxv; csrftoken=5o7PN96Y9Ln95EnlXN6t0pmCHDqdbect; mid=YNIa4QALAAGoeESFP8axY9NfC9t3; ig_nrcb=1',
+   'TE': 'Trailers'}
+ data={"email_or_username":email_or_user,"recaptcha_challenge_field":"","flow":"","app_id":"","source_account_id":""}
+ req=requests.post('https://www.instagram.com/accounts/account_recovery_send_ajax/',headers=head,data=data)
+ if 'No users found' in req.text:print("[-] NOT Linked to an acc on instagram")
+ elif req.json()['status']=="ok":
+  print(f"[+] Linked To an account on instagram")
+  print(f"[+] Done send Link to [{req.json()['contact_point']}]")
+  print("[?] Can recover with code :"+str(req.json()['can_recover_with_code']))
+ else:print("Error Ban [min 5/10] ")
+def Check_vaild_list():
+ Email='email.txt'
+ File=open(Email, 'r')
+ while True:
+  email_or_user=File.readline().split('\n')[0]
+  head={
+   'Host': 'www.instagram.com',
+   'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:89.0) Gecko/20100101 Firefox/89.0',
